@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal">
+
+        <!-- HEADER -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Tambah Transaksi"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#111"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="#555"
+                android:layout_alignParentEnd="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+        </RelativeLayout>
+
+        <!-- TOGGLE -->
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <Button
+                android:id="@+id/btnPengeluaran"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Pengeluaran"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:background="@drawable/bg_toggle_red"
+                android:backgroundTint="@null"/>
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/btnPemasukan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Pemasukan"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textColor="#222"
+                android:background="@drawable/bg_toggle_gray"
+                android:backgroundTint="@null"/>
+
+        </LinearLayout>
+
+        <!-- TITLE -->
+        <TextView
+            android:text="Judul"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:hint="Beli Jajan"
+            android:background="@drawable/bg_input"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"/>
+
+        <!-- JUMLAH -->
+        <TextView
+            android:text="Jumlah"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:hint="Rp 0"
+            android:background="@drawable/bg_input"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"/>
+
+        <!-- UPLOAD -->
+        <TextView
+            android:text="Upload Struk"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/uploadArea"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/bg_upload"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:src="@android:drawable/ic_menu_upload"
+                android:tint="#999"
+                android:layout_width="28dp"
+                android:layout_height="28dp"/>
+
+            <TextView
+                android:text="Klik untuk upload struk"
+                android:textColor="#777"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <!-- DESKRIPSI -->
+        <TextView
+            android:text="Deskripsi"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:hint="Masukkan deskripsi"
+            android:background="@drawable/bg_input"
+            android:padding="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"/>
+
+        <!-- TANGGAL -->
+        <TextView
+            android:text="Tanggal"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/inputTanggal"
+            android:text="01/04/2026"
+            android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+            android:background="@drawable/bg_input"
+            android:padding="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"/>
+
+        <!-- BUTTON -->
+        <Button
+            android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="26dp"
+            android:text="Simpan Transaksi"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/bg_button_gradient"
+            android:backgroundTint="@null"/>
+
+    </LinearLayout>
+</ScrollView>
