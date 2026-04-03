@@ -64,7 +64,7 @@ class AddTransactionBottomSheet(
 
             val cal = Calendar.getInstance()
 
-            DatePickerDialog(
+            val datePicker = DatePickerDialog(
                 requireContext(),
                 { _, year, month, day ->
                     cal.set(year, month, day)
@@ -74,7 +74,11 @@ class AddTransactionBottomSheet(
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+
+            datePicker.datePicker.maxDate = System.currentTimeMillis()
+
+            datePicker.show()
         }
 
         // TOGGLE
@@ -102,16 +106,33 @@ class AddTransactionBottomSheet(
         // SAVE
         btnSave.setOnClickListener {
 
-            val title = etTitle.text.toString()
-            val amount = etAmount.text.toString()
-            val desc = etDescription.text.toString()
+            val title = etTitle.text.toString().trim()
+            val amountStr = etAmount.text.toString().trim()
+            val desc = etDescription.text.toString().trim()
 
-            if (title.isEmpty() || amount.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Judul dan jumlah wajib diisi",
-                    Toast.LENGTH_SHORT
-                ).show()
+            if (title.isEmpty()) {
+                etTitle.error = "Judul wajib diisi"
+                etTitle.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (amountStr.isEmpty()) {
+                etAmount.error = "Jumlah wajib diisi"
+                etAmount.requestFocus()
+                return@setOnClickListener
+            }
+
+            val amount = amountStr.toLongOrNull()
+            if (amount == null || amount <= 0) {
+                etAmount.error = "Jumlah tidak valid"
+                etAmount.requestFocus()
+                return@setOnClickListener
+            }
+
+            val today = System.currentTimeMillis()
+            if (selectedDate > today) {
+                inputTanggal.error = "Tidak bisa pilih tanggal masa depan"
+                inputTanggal.requestFocus()
                 return@setOnClickListener
             }
 
@@ -120,7 +141,7 @@ class AddTransactionBottomSheet(
                 type = type,
                 title = title,
                 description = desc,
-                amount = amount.toLong(),
+                amount = amount,
                 date = selectedDate
             )
 
@@ -145,7 +166,6 @@ class AddTransactionBottomSheet(
 
             imageUri = data?.data
 
-            // 🔥 tampilkan preview
             imgPreview.setImageURI(imageUri)
             imgPreview.visibility = View.VISIBLE
             placeholder.visibility = View.GONE
