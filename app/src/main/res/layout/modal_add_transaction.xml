@@ -2,7 +2,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fillViewport="true">
 
     <LinearLayout
@@ -43,8 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="56dp">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPengeluaran"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -59,8 +60,9 @@
                 android:layout_width="12dp"
                 android:layout_height="match_parent"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPemasukan"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -73,16 +75,17 @@
 
         </LinearLayout>
 
-        <!-- TITLE -->
+        <!-- JUDUL -->
         <TextView
             android:text="Judul"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="#000"
             android:layout_marginTop="22dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etTitle"
             android:hint="Beli Jajan"
             android:background="@drawable/bg_input"
             android:padding="16dp"
@@ -95,12 +98,13 @@
         <TextView
             android:text="Jumlah"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="#000"
             android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etAmount"
             android:hint="Rp 0"
             android:background="@drawable/bg_input"
             android:padding="16dp"
@@ -110,68 +114,87 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"/>
 
-        <!-- UPLOAD -->
+        <!-- UPLOAD STRUK -->
         <TextView
             android:text="Upload Struk"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="#000"
             android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/uploadArea"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/bg_upload"
-            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
-            android:layout_height="120dp">
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_upload">
 
+            <!-- Placeholder -->
+            <LinearLayout
+                android:id="@+id/layoutPlaceholder"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:src="@android:drawable/ic_menu_upload"
+                    android:tint="#999"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"/>
+
+                <TextView
+                    android:text="Klik untuk upload struk"
+                    android:textColor="#777"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!-- Preview Image -->
             <ImageView
-                android:src="@android:drawable/ic_menu_upload"
-                android:tint="#999"
-                android:layout_width="28dp"
-                android:layout_height="28dp"/>
+                android:id="@+id/imgPreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"/>
 
-            <TextView
-                android:text="Klik untuk upload struk"
-                android:textColor="#777"
-                android:textSize="14sp"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
+        </FrameLayout>
 
         <!-- DESKRIPSI -->
         <TextView
             android:text="Deskripsi"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="#000"
             android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <EditText
-            android:hint="Masukkan deskripsi"
-            android:background="@drawable/bg_input"
-            android:padding="16dp"
-            android:layout_marginTop="6dp"
+            android:id="@+id/etDescription"
             android:layout_width="match_parent"
-            android:layout_height="54dp"/>
+            android:layout_height="54dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_input"
+            android:hint="Masukkan deskripsi"
+            android:padding="16dp" />
 
         <!-- TANGGAL -->
         <TextView
             android:text="Tanggal"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="#000"
             android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <EditText
             android:id="@+id/inputTanggal"
+            android:focusable="false"
+            android:clickable="true"
             android:text="01/04/2026"
             android:drawableEnd="@android:drawable/ic_menu_my_calendar"
             android:background="@drawable/bg_input"
@@ -180,12 +203,14 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"/>
 
-        <!-- BUTTON -->
-        <Button
+        <!-- BUTTON SIMPAN -->
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSimpan"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_marginTop="26dp"
+            android:layout_marginBottom="20dp"
             android:text="Simpan Transaksi"
             android:textAllCaps="false"
             android:textSize="17sp"
@@ -194,4 +219,5 @@
             android:backgroundTint="@null"/>
 
     </LinearLayout>
+
 </ScrollView>

@@ -12,10 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManaDuit">
         <activity
-            android:name=".ui.AddTransactionActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
 
             <intent-filter>
