@@ -9,10 +9,11 @@ Aplikasi ini membantu pengguna memantau transaksi keuangan sehingga dapat menget
 # 📱 Preview Aplikasi
 
 ```
-Preview_Aplikasi/
-├── home.png
-├── add_transaction.png
-└── transaction_list.png
+![WhatsApp Image 2026-04-04 at 22 39 12](https://github.com/user-attachments/assets/a9bc3574-f15f-431e-833e-d05bfc212769)
+
+1. Download Preview_Aplikasi.zim
+2. Buka File
+3. Seluruh Dokumentasi Aplikasi Diletakan
 ```
 
 Contoh penggunaan di README:
