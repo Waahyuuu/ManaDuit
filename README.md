@@ -9,29 +9,21 @@ Aplikasi ini membantu pengguna memantau transaksi keuangan sehingga dapat menget
 # 📱 Preview Aplikasi
 
 ```
-![WhatsApp Image 2026-04-04 at 22 39 12](https://github.com/user-attachments/assets/a9bc3574-f15f-431e-833e-d05bfc212769)
-
 1. Download Preview_Aplikasi.zim
 2. Buka File
 3. Seluruh Dokumentasi Aplikasi Diletakan
-```
-
-Contoh penggunaan di README:
-
-```
-![Home](screenshots/home.png)
-![Add Transaction](screenshots/add_transaction.png)
-![Transaction List](screenshots/transaction_list.png)
 ```
 
 ---
 
 # ✨ Fitur Utama
 
-* 📥 Menambahkan transaksi **pemasukan**
-* 📤 Menambahkan transaksi **pengeluaran**
-* 📜 Menampilkan **riwayat transaksi**
-* 📅 Menampilkan **tanggal transaksi**
+* Menambahkan transaksi **pemasukan**
+* Menambahkan transaksi **pengeluaran**
+* Menghaous transaksi **pemasukan & pengeluaran**
+* Menampilkan **riwayat transaksi**
+* Menampilkan **detail transaksi**
+* Menampilkan **bulan dalam setahun transaksi**
 * 📱 Tampilan sederhana dan mudah digunakan
 
 ---
@@ -40,10 +32,8 @@ Contoh penggunaan di README:
 
 Beberapa fitur yang dapat dikembangkan pada aplikasi ini:
 
-* 📊 Grafik pemasukan dan pengeluaran
 * 🏷 Kategori transaksi
 * 🔍 Pencarian transaksi
-* 📆 Filter transaksi berdasarkan tanggal
 * ☁ Backup dan restore data
 * 📑 Export laporan keuangan
 
@@ -66,31 +56,39 @@ Project ini dibangun menggunakan teknologi berikut:
 ```
 ManaDuit
 │
-├── adapter
-│   └── TransactionAdapter.kt
-│
 ├── data
+│   └── AppDatabase.kt
 │   └── Transaction.kt
+│   └── TransactionDao.kt
+│   └── TransactionRepository.kt
 │
 ├── ui
-│   └── MainActivity.kt
+│   └── AddTransactionBottomSheet.kt
+│   └── TransactionDetailBottomSheet.kt
+│   └── TransactionViewModel.kt
 │
 ├── layout
 │   ├── activity_main.xml
 │   └── item_transaction.xml
-│
-└── util
+│   └── modal_add_transaction.xml
+│   └── modal_detail_transaction.xml
+│ 
+├── MainActivity.kt
+└── TransactionAdapter.kt
 ```
 
 ### Penjelasan Struktur
 
 | Folder  | Fungsi                                   |
 | ------- | ---------------------------------------- |
-| adapter | Mengatur tampilan data pada RecyclerView |
 | data    | Model data transaksi                     |
 | ui      | Activity atau tampilan aplikasi          |
 | layout  | XML untuk desain tampilan                |
-| util    | Fungsi tambahan / helper                 |
+
+| File  | Fungsi                                     |
+| ------- | ---------------------------------------- |
+| adapter | Mengatur tampilan data pada RecyclerView |
+| main    | Activity Utama                           |
 
 ---
 
@@ -125,9 +123,9 @@ Jalankan aplikasi menggunakan:
 1. Buka aplikasi ManaDuit
 2. Tambahkan transaksi baru
 3. Pilih jenis transaksi:
-
    * Pemasukan
    * Pengeluaran
+4. Lengkapi semua inputan
 4. Simpan transaksi
 5. Transaksi akan muncul di daftar riwayat
 
@@ -166,7 +164,7 @@ Langkah kontribusi:
 
 # 👨‍💻 Author
 
-**Wahyu**
+**Mohamad Wahyudin Yunus**
 
 Mahasiswa Sistem Informasi
 STIMATA Malang
