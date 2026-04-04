@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -88,6 +87,7 @@
             android:id="@+id/etTitle"
             android:hint="Beli Jajan"
             android:background="@drawable/bg_input"
+            android:textColor="#000"
             android:padding="16dp"
             android:textSize="16sp"
             android:layout_marginTop="6dp"
@@ -109,6 +109,7 @@
             android:background="@drawable/bg_input"
             android:padding="16dp"
             android:textSize="16sp"
+            android:textColor="#000"
             android:inputType="number"
             android:layout_marginTop="6dp"
             android:layout_width="match_parent"
@@ -139,10 +140,10 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:src="@android:drawable/ic_menu_upload"
+                    android:src="@drawable/ic_camera"
                     android:tint="#999"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"/>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
 
                 <TextView
                     android:text="Klik untuk upload struk"
@@ -180,6 +181,7 @@
             android:minHeight="54dp"
             android:layout_marginTop="6dp"
             android:background="@drawable/bg_input"
+            android:textColor="#000"
             android:hint="Masukkan deskripsi"
             android:padding="16dp"
             android:gravity="top"
@@ -201,9 +203,10 @@
             android:focusable="false"
             android:clickable="true"
             android:text="01/04/2026"
-            android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+            android:drawableEnd="@drawable/ic_calendar"
             android:background="@drawable/bg_input"
             android:padding="16dp"
+            android:textColor="#000"
             android:layout_marginTop="6dp"
             android:layout_width="match_parent"
             android:layout_height="54dp"/>

@@ -1,5 +1,6 @@
 package com.example.manaduit.ui
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
@@ -8,9 +9,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import com.example.manaduit.R
 import com.example.manaduit.data.Transaction
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,8 +25,9 @@ class AddTransactionBottomSheet(
 
     private var type = "expense"
     private var selectedDate: Long = System.currentTimeMillis()
+
     private var imageUri: Uri? = null
-    private val PICK_IMAGE = 1001
+    private var tempImageUri: Uri? = null
 
     private lateinit var imgPreview: ImageView
     private lateinit var placeholder: LinearLayout
@@ -32,11 +38,7 @@ class AddTransactionBottomSheet(
         savedInstanceState: Bundle?
     ): View {
 
-        val view = inflater.inflate(
-            R.layout.modal_add_transaction,
-            container,
-            false
-        )
+        val view = inflater.inflate(R.layout.modal_add_transaction, container, false)
 
         val etTitle = view.findViewById<EditText>(R.id.etTitle)
         val etAmount = view.findViewById<EditText>(R.id.etAmount)
@@ -54,12 +56,10 @@ class AddTransactionBottomSheet(
         placeholder = view.findViewById(R.id.layoutPlaceholder)
 
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale("id"))
-
         inputTanggal.setText(sdf.format(Date(selectedDate)))
 
         setExpenseActive(btnExpense, btnIncome)
 
-        // DATE PICKER
         inputTanggal.setOnClickListener {
 
             val cal = Calendar.getInstance()
@@ -77,11 +77,9 @@ class AddTransactionBottomSheet(
             )
 
             datePicker.datePicker.maxDate = System.currentTimeMillis()
-
             datePicker.show()
         }
 
-        // TOGGLE
         btnExpense.setOnClickListener {
             type = "expense"
             setExpenseActive(btnExpense, btnIncome)
@@ -92,18 +90,10 @@ class AddTransactionBottomSheet(
             setIncomeActive(btnExpense, btnIncome)
         }
 
-        // PICK IMAGE
         uploadArea.setOnClickListener {
-
-            val intent = Intent(
-                Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
-
-            startActivityForResult(intent, PICK_IMAGE)
+            showImagePickerDialog()
         }
 
-        // SAVE
         btnSave.setOnClickListener {
 
             val title = etTitle.text.toString().trim()
@@ -122,15 +112,16 @@ class AddTransactionBottomSheet(
                 return@setOnClickListener
             }
 
-            val amount = amountStr.toLongOrNull()
+            // PERBAIKAN parsing amount
+            val amount = amountStr.replace(".", "").toLongOrNull()
+
             if (amount == null || amount <= 0) {
                 etAmount.error = "Jumlah tidak valid"
                 etAmount.requestFocus()
                 return@setOnClickListener
             }
 
-            val today = System.currentTimeMillis()
-            if (selectedDate > today) {
+            if (selectedDate > System.currentTimeMillis()) {
                 inputTanggal.error = "Tidak bisa pilih tanggal masa depan"
                 inputTanggal.requestFocus()
                 return@setOnClickListener
@@ -155,31 +146,90 @@ class AddTransactionBottomSheet(
         return view
     }
 
-    // HANDLE IMAGE RESULT
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun showImagePickerDialog() {
 
-        if (requestCode == PICK_IMAGE && resultCode == -1) {
+        val options = arrayOf("Kamera", "Galeri")
 
-            imageUri = data?.data
+        AlertDialog.Builder(requireContext())
+            .setTitle("Pilih Sumber Gambar")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> openCamera()
+                    1 -> openGallery()
+                }
+            }
+            .show()
+    }
 
-            imgPreview.setImageURI(imageUri)
-            imgPreview.visibility = View.VISIBLE
-            placeholder.visibility = View.GONE
+    private fun openGallery() {
 
-            Toast.makeText(
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+        }
+
+        imageLauncher.launch(intent)
+    }
+
+    private fun openCamera() {
+
+        try {
+
+            val photoFile = File.createTempFile(
+                "IMG_${System.currentTimeMillis()}",
+                ".jpg",
+                requireContext().cacheDir
+            )
+
+            tempImageUri = FileProvider.getUriForFile(
                 requireContext(),
-                "Struk berhasil dipilih",
-                Toast.LENGTH_SHORT
-            ).show()
+                "${requireContext().packageName}.provider",
+                photoFile
+            )
+
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+                putExtra(MediaStore.EXTRA_OUTPUT, tempImageUri)
+                addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+
+            imageLauncher.launch(intent)
+
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Gagal membuka kamera", Toast.LENGTH_SHORT).show()
         }
     }
 
+    private val imageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+            if (result.resultCode == Activity.RESULT_OK) {
+
+                try {
+
+                    val uri = result.data?.data ?: tempImageUri
+
+                    if (uri != null) {
+
+                        imageUri = uri
+
+                        imgPreview.setImageURI(uri)
+                        imgPreview.visibility = View.VISIBLE
+                        placeholder.visibility = View.GONE
+                    }
+
+                } catch (e: Exception) {
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Gagal memuat gambar",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
     private fun setExpenseActive(btnExpense: Button, btnIncome: Button) {
+
         btnExpense.setBackgroundResource(R.drawable.bg_toggle_red)
         btnExpense.setTextColor(Color.WHITE)
 
@@ -188,6 +238,7 @@ class AddTransactionBottomSheet(
     }
 
     private fun setIncomeActive(btnExpense: Button, btnIncome: Button) {
+
         btnIncome.setBackgroundResource(R.drawable.bg_toggle_green)
         btnIncome.setTextColor(Color.WHITE)
 

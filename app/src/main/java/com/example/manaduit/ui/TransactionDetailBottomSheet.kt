@@ -48,20 +48,33 @@ class TransactionDetailBottomSheet(
 
         if (!data.imageUri.isNullOrEmpty()) {
 
-            val uri = android.net.Uri.parse(data.imageUri)
+            try {
 
-            img.visibility = View.VISIBLE
-            empty.visibility = View.GONE
+                val uri = android.net.Uri.parse(data.imageUri)
 
-            img.setImageURI(uri)
+                img.visibility = View.VISIBLE
+                empty.visibility = View.GONE
 
-            img.setOnClickListener {
-                val dialog = Dialog(requireContext())
-                val imageView = ImageView(requireContext())
-                imageView.setImageURI(uri)
-                imageView.adjustViewBounds = true
-                dialog.setContentView(imageView)
-                dialog.show()
+                img.setImageURI(uri)
+
+                img.setOnClickListener {
+
+                    if (!isAdded) return@setOnClickListener
+
+                    val dialog = Dialog(requireContext())
+                    val imageView = ImageView(requireContext())
+
+                    imageView.setImageURI(uri)
+                    imageView.adjustViewBounds = true
+
+                    dialog.setContentView(imageView)
+                    dialog.show()
+                }
+
+            } catch (e: Exception) {
+
+                img.visibility = View.GONE
+                empty.visibility = View.VISIBLE
             }
 
         } else {

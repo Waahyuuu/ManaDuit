@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var isSaldoVisible = true
     private var saldoAsli: Long = 0
 
-    // FILTER STATE
+    // FILTER
     private var selectedMonth: Int? = null
     private var selectedYear: Int? = null
 
@@ -45,28 +46,42 @@ class MainActivity : AppCompatActivity() {
         val calNow = Calendar.getInstance()
         val currentYear = calNow.get(Calendar.YEAR)
 
-        // DEFAULT = BULAN SEKARANG
+        // default bulan sekarang
         selectedMonth = calNow.get(Calendar.MONTH)
         selectedYear = currentYear
 
-        val monthName = SimpleDateFormat("MMMM yyyy", Locale("id"))
+        val monthName = SimpleDateFormat("MMMM yyyy", Locale("id", "ID"))
         btnMonth.text = monthName.format(Date())
 
         adapter = TransactionAdapter()
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // klik item
         adapter.onItemClick = { transaction ->
-            val sheet = TransactionDetailBottomSheet(transaction)
-            sheet.show(supportFragmentManager, "detail")
+
+            if (!supportFragmentManager.isStateSaved) {
+                val sheet = TransactionDetailBottomSheet(transaction)
+                sheet.show(supportFragmentManager, "detail")
+            }
         }
 
+        // long click delete
         adapter.onItemLongClick = { transaction ->
+
             AlertDialog.Builder(this)
                 .setTitle("Hapus Transaksi")
                 .setMessage("Yakin ingin menghapus?")
                 .setPositiveButton("Hapus") { _, _ ->
+
                     viewModel.delete(transaction)
+
+                    Toast.makeText(
+                        this,
+                        "Transaksi berhasil dihapus",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 .setNegativeButton("Batal", null)
                 .show()
@@ -82,7 +97,8 @@ class MainActivity : AppCompatActivity() {
                 .filter {
                     val cal = Calendar.getInstance()
                     cal.timeInMillis = it.date
-                    cal.get(Calendar.YEAR) == currentYear && it.type == "expense"
+                    cal.get(Calendar.YEAR) == currentYear &&
+                            it.type == "expense"
                 }
                 .sumOf { it.amount }
 
@@ -90,25 +106,41 @@ class MainActivity : AppCompatActivity() {
                 "Biaya Hidup $currentYear ${formatRupiah(yearlyExpense)}"
         }
 
-        // TOTAL SALDO
+        // SALDO
         viewModel.totalIncome.observe(this) { income ->
+
             val incomeValue = income ?: 0
             val expenseValue = viewModel.totalExpense.value ?: 0
+
             updateSaldo(tvSaldo, incomeValue, expenseValue)
         }
 
         viewModel.totalExpense.observe(this) { expense ->
+
             val expenseValue = expense ?: 0
             val incomeValue = viewModel.totalIncome.value ?: 0
+
             updateSaldo(tvSaldo, incomeValue, expenseValue)
         }
 
         // TAMBAH TRANSAKSI
         fabAdd.setOnClickListener {
-            val sheet = AddTransactionBottomSheet {
-                viewModel.insert(it)
+
+            if (!supportFragmentManager.isStateSaved) {
+
+                val sheet = AddTransactionBottomSheet {
+
+                    viewModel.insert(it)
+
+                    Toast.makeText(
+                        this,
+                        "Transaksi berhasil ditambahkan",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                sheet.show(supportFragmentManager, "AddTransaction")
             }
-            sheet.show(supportFragmentManager, "AddTransaction")
         }
 
         // TOGGLE SALDO
@@ -121,7 +153,8 @@ class MainActivity : AppCompatActivity() {
             else
                 "•".repeat(formatAngka(saldoAsli).length + 3)
 
-            val distance = tvSaldo.width * 0.3f
+            val width = if (tvSaldo.width > 0) tvSaldo.width else 200
+            val distance = width * 0.3f
 
             tvSaldo.animate()
                 .translationX(-distance)
@@ -163,7 +196,10 @@ class MainActivity : AppCompatActivity() {
 
             val availableMonths = mutableListOf<String>()
             availableMonths.add("Semua")
-            availableMonths.addAll(months.sliceArray(1..currentMonth + 1))
+
+            for (i in 1..currentMonth + 1) {
+                availableMonths.add(months[i])
+            }
 
             AlertDialog.Builder(this)
                 .setTitle("Pilih Bulan")
@@ -172,10 +208,13 @@ class MainActivity : AppCompatActivity() {
                     val selected = availableMonths[which]
 
                     if (selected == "Semua") {
+
                         selectedMonth = null
                         selectedYear = null
                         btnMonth.text = "Semua"
+
                     } else {
+
                         selectedMonth = which - 1
                         selectedYear = currentYear
                         btnMonth.text = "$selected $currentYear"
@@ -204,7 +243,9 @@ class MainActivity : AppCompatActivity() {
         val filtered = if (selectedMonth == null) {
             list
         } else {
+
             list.filter {
+
                 val cal = Calendar.getInstance()
                 cal.timeInMillis = it.date
 
@@ -216,9 +257,12 @@ class MainActivity : AppCompatActivity() {
         adapter.setData(filtered)
 
         if (filtered.isEmpty()) {
+
             emptyState.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
+
         } else {
+
             emptyState.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
         }
@@ -236,6 +280,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateSaldo(tvSaldo: TextView, income: Long, expense: Long) {
+
         saldoAsli = income - expense
 
         tvSaldo.text = if (isSaldoVisible)

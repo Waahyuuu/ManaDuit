@@ -6,9 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#F5F7FA">
 
-    <!-- HEADER GRADIENT -->
 
-    <!-- CARD PEMASUKAN & PENGELUARAN -->
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="0dp"
@@ -21,18 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- TOP ROW -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ManaDuit"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:src="@drawable/logo"
+                android:contentDescription="Logo ManaDuit"
+                android:scaleX="2.2"
+                android:scaleY="2.2"
+                android:tint="#E6E6E6"/>
 
             <TextView
                 android:id="@+id/btnMonth"
@@ -137,11 +135,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="Pemasukan"
-                    android:textColor="#E5E7EB"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/bg_trending_up"
+                        android:layout_marginEnd="6dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_trending_up"
+                            android:layout_gravity="center"
+                            app:tint="#E5E7EB"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:text="Pemasukan"
+                        android:textColor="#E5E7EB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvIncome"
@@ -173,11 +193,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="Pengeluaran"
-                    android:textColor="#E5E7EB"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/bg_trending_down"
+                        android:layout_marginEnd="6dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_trending_down"
+                            android:layout_gravity="center"
+                            app:tint="#E5E7EB"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:text="Pengeluaran"
+                        android:textColor="#E5E7EB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvExpense"
