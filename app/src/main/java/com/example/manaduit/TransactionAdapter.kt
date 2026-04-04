@@ -14,7 +14,8 @@ class TransactionAdapter :
     RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     private var list = listOf<Transaction>()
-
+    var onItemClick: ((Transaction) -> Unit)? = null
+    var onItemLongClick: ((Transaction) -> Unit)? = null
     fun setData(newList: List<Transaction>) {
         list = newList
         notifyDataSetChanged()
@@ -54,6 +55,15 @@ class TransactionAdapter :
 
             holder.tvAmount.setTextColor(Color.parseColor("#FF2B2B"))
             holder.tvAmount.text = "- ${formatRupiah(data.amount)}"
+        }
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(data)
+        }
+
+        holder.itemView.setOnLongClickListener {
+            onItemLongClick?.invoke(data)
+            true
         }
     }
 

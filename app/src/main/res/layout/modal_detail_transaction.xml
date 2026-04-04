@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:id="@+id/header"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_gradient_red">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Detail Transaksi"
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:tint="#FFF"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"/>
+            </RelativeLayout>
+
+            <!-- TYPE -->
+            <TextView
+                android:id="@+id/tvType"
+                android:text="Pengeluaran"
+                android:textColor="#FFF"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- AMOUNT -->
+            <TextView
+                android:id="@+id/tvAmount"
+                android:text="-Rp 0"
+                android:textColor="#FFF"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <!-- CONTENT -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- DESKRIPSI -->
+            <TextView
+                android:text="Deskripsi"
+                android:textColor="#888"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvDesc"
+                android:text="Deskripsi transaksi"
+                android:textColor="#111"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- TANGGAL -->
+            <TextView
+                android:text="Tanggal"
+                android:textColor="#888"
+                android:textSize="14sp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:text="01 Januari 2026"
+                android:textColor="#111"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- STRUK -->
+            <TextView
+                android:text="Bukti"
+                android:textColor="#888"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- IMAGE -->
+            <ImageView
+                android:id="@+id/imgStruk"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:background="@drawable/bg_upload"/>
+
+            <!-- EMPTY -->
+            <LinearLayout
+                android:id="@+id/layoutEmptyStruk"
+                android:layout_width="match_parent"
+                android:layout_height="211dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_input"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak ada struk untuk transaksi ini"
+                    android:textColor="#777"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

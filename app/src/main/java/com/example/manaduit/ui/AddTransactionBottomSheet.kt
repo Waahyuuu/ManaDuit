@@ -142,7 +142,8 @@ class AddTransactionBottomSheet(
                 title = title,
                 description = desc,
                 amount = amount,
-                date = selectedDate
+                date = selectedDate,
+                imageUri = imageUri?.toString()
             )
 
             onSave(transaction)

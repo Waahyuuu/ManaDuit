@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.manaduit.data.Transaction
 import com.example.manaduit.ui.AddTransactionBottomSheet
+import com.example.manaduit.ui.TransactionDetailBottomSheet
 import com.example.manaduit.ui.TransactionViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,6 +55,22 @@ class MainActivity : AppCompatActivity() {
         adapter = TransactionAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        adapter.onItemClick = { transaction ->
+            val sheet = TransactionDetailBottomSheet(transaction)
+            sheet.show(supportFragmentManager, "detail")
+        }
+
+        adapter.onItemLongClick = { transaction ->
+            AlertDialog.Builder(this)
+                .setTitle("Hapus Transaksi")
+                .setMessage("Yakin ingin menghapus?")
+                .setPositiveButton("Hapus") { _, _ ->
+                    viewModel.delete(transaction)
+                }
+                .setNegativeButton("Batal", null)
+                .show()
+        }
 
         viewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
 

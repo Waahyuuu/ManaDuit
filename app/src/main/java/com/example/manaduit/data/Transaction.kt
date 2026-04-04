@@ -1,5 +1,6 @@
 package com.example.manaduit.data
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -16,5 +17,7 @@ data class Transaction(
     val description: String?,
 
     val amount: Long,
-    val date: Long
+    val date: Long,
+
+    val imageUri: String?
 )
